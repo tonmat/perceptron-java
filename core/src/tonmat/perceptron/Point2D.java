@@ -4,6 +4,7 @@ public class Point2D {
     public final float x;
     public final float y;
     public final float target;
+    public float guess;
 
     public Point2D(float x, float y) {
         this.x = x;
