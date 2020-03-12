@@ -8,7 +8,8 @@ public class DesktopLauncher {
 	public static void main(String[] arg) {
 		final var config = new Lwjgl3ApplicationConfiguration();
 		config.setTitle("Perceptron");
-		config.setWindowedMode(800, 800);
+		config.setWindowedMode(400, 400);
+		config.setResizable(false);
 		config.setBackBufferConfig(8, 8, 8, 0, 0, 0, 4);
 		new Lwjgl3Application(new Perceptron(), config);
 	}

@@ -3,11 +3,13 @@ package tonmat.perceptron;
 import com.badlogic.gdx.math.MathUtils;
 
 public class Neuron {
+    public final float bias;
     public final float[] weights;
     private final ActivationFunction activationFunction;
 
-    public Neuron(int weights, ActivationFunction activationFunction) {
-        this.weights = new float[weights];
+    public Neuron(float bias, int weights, ActivationFunction activationFunction) {
+        this.bias = bias;
+        this.weights = new float[weights + 1];
         this.activationFunction = activationFunction;
     }
 
@@ -17,16 +19,17 @@ public class Neuron {
     }
 
     public float guess(float... input) {
-        var sum = 0f;
-        for (var i = 0; i < weights.length; i++)
-            sum += weights[i] * input[i];
+        var sum = weights[0] * bias;
+        for (var i = 0; i < input.length; i++)
+            sum += weights[i + 1] * input[i];
         return activationFunction.activate(sum);
     }
 
     public void train(float learningRate, float target, float... input) {
         final var guess = guess(input);
         final var error = target - guess;
-        for (var i = 0; i < weights.length; i++)
-            weights[i] += error * input[i] * learningRate;
+        weights[0] += error * bias * learningRate;
+        for (var i = 0; i < input.length; i++)
+            weights[i + 1] += error * input[i] * learningRate;
     }
 }

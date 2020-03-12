@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class Perceptron extends ApplicationAdapter {
-    private static final int POINTS_COUNT = 10000;
+    private static final int POINTS_COUNT = 1000;
     private static final float BIAS = -1f;
     private static final float LEARNING_RATE = 0.1f;
     private Neuron neuron;
@@ -18,7 +18,7 @@ public class Perceptron extends ApplicationAdapter {
 
     @Override
     public void create() {
-        neuron = new Neuron(3, ActivationFunction.SIGN);
+        neuron = new Neuron(BIAS, 2, ActivationFunction.SIGN);
         neuron.randomizeWeights(-1, 1);
         points = new Point2D[POINTS_COUNT];
         for (var i = 0; i < points.length; i++) {
@@ -31,11 +31,11 @@ public class Perceptron extends ApplicationAdapter {
     }
 
     private float guess(Point2D p) {
-        return neuron.guess(BIAS, p.x, p.y);
+        return neuron.guess(p.x, p.y);
     }
 
     private void train(Point2D p) {
-        neuron.train(LEARNING_RATE, p.target, BIAS, p.x, p.y);
+        neuron.train(LEARNING_RATE, p.target, p.x, p.y);
     }
 
     @Override
